@@ -30,9 +30,6 @@ CREATE TABLE countries (
         ON UPDATE CASCADE
 );
 
-COMMENT ON TABLE countries IS
-'No .py há conflito sobre o tipo de countries.id. Foi adotado INTEGER IDENTITY para manter coerência com as FKs numéricas do mapeamento.';
-
 CREATE TABLE time_zones (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name TEXT NOT NULL UNIQUE,
@@ -122,9 +119,6 @@ CREATE TABLE cities (
         ON UPDATE CASCADE
 );
 
-COMMENT ON TABLE cities IS
-'O arquivo cities15000.tsv possui um identificador de origem (geonameid), mas o mapeamento final define apenas id artificial. Se quiser preservar rastreabilidade, crie uma coluna auxiliar geonameid UNIQUE na carga.';
-
 CREATE TABLE airports (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     ident VARCHAR(10) NOT NULL UNIQUE,
@@ -176,9 +170,6 @@ CREATE TABLE circuits (
         ON UPDATE CASCADE
 );
 
-COMMENT ON TABLE circuits IS
-'O .py indica que circuit_ref provavelmente vem do campo textual do CSV e que city_id nao vem pronto da fonte. O relacionamento com cities depende de ETL por localidade/pais.';
-
 CREATE TABLE constructors (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     constructor_ref VARCHAR(20) NOT NULL UNIQUE,
@@ -193,9 +184,6 @@ CREATE TABLE constructors (
         ON DELETE SET NULL
         ON UPDATE CASCADE
 );
-
-COMMENT ON TABLE constructors IS
-'O .py informa que country_id nao vem pronto no CSV de constructors. Esta FK depende de normalizacao/ETL a partir de nationality ou outra tabela auxiliar.';
 
 CREATE TABLE drivers (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -349,9 +337,6 @@ CREATE TABLE constructor_standings (
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
-
-COMMENT ON TABLE standings IS
-'O .py informa que season, round, position, points e wins aparecem nos CSVs de driver_standings e constructor_standings, mas no mapeamento foram centralizados em standings. A carga exige consolidacao previa.';
 
 -- =========================================================
 -- RELACIONAMENTOS AUXILIARES
